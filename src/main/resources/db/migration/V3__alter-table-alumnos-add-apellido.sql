@@ -1,0 +1,1 @@
+alter table alumnos add apellido varchar(50) not null;
