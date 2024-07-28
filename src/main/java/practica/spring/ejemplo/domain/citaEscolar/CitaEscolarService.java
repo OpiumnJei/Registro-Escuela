@@ -20,7 +20,7 @@ public class CitaEscolarService {
     @Autowired
     private AlumnoRepository alumnoRepository;
 
-    //cambio hecho desde intelliJ
+    //cambio hecho desde intellij
 
     public void guardarCitaEscolar(GuardarDatosCitaEscolar  datosCitaEscolar){
 
