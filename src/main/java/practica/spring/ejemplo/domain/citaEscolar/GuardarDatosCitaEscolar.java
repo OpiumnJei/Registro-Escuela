@@ -14,7 +14,6 @@ public record GuardarDatosCitaEscolar(
         @NotNull
         Long idAlumno,
 
-        @NotNull
         Long idProfesor,
 
         @NotBlank

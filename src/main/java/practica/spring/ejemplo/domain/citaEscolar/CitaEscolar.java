@@ -15,7 +15,7 @@ import java.util.Optional;
 @Entity(name = "Cita")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class CitaEscolar {
 
@@ -31,10 +31,37 @@ public class CitaEscolar {
     @JoinColumn(name = "id_profesor")
     private Profesor profesor;
 
+    @Column(name="tutorAlumno")
     private String tutorAlumno;
     private LocalDateTime fecha;
 
 
     public CitaEscolar(Long id, Alumno alumno, Profesor profesor, String tutorAlumno, LocalDateTime fecha) {
+        this.id = id;
+        this.alumno = alumno;
+        this.profesor = profesor;
+        this.tutorAlumno = tutorAlumno;
+        this.fecha = fecha;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Alumno getAlumno() {
+        return alumno;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public String getTutorAlumno() {
+        return tutorAlumno;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
     }
 }
+

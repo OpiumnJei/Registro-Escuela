@@ -17,13 +17,23 @@ public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
     //crear consulta JPQL
     @Query("""
             SELECT p FROM Profesor p
-            WHERE p.activo = 1 
-            AND p.asignaturaImpartida = :asignaturaImpartida
+            WHERE p.activo = true
+            AND p.asignatura_impartida = :asignaturaImpartida
             AND p.id NOT IN (
-                SELECT c.profesor.id FROM CitaEscolar c
+                SELECT c.profesor.id FROM Cita c
                 WHERE c.fecha = :fecha
             )
             ORDER BY RAND()
+            LIMIT 1
             """)
     Profesor SeleccionarProfesorConAsignaturaEnFecha(String asignaturaImpartida, LocalDateTime fecha);
+
+    //selecciona el campo activo de la entidad Profesor
+    //y luego compara que el id del Profesor sea el mismo introducido por el usuario
+    @Query("""
+            SELECT p.activo
+            FROM Profesor p
+            WHERE p.id=:idProfesor
+            """)
+    Boolean findActivoById(Long idProfesor);
 }

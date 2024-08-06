@@ -10,4 +10,8 @@ public record RespuestaCitaEscolar(
         String tutorAlumno,
         LocalDateTime fecha
 ) {
+    //metodo que recibe los datos enviados a la cita escolar
+    public RespuestaCitaEscolar(CitaEscolar citaEscolar) {
+        this(citaEscolar.getId(), citaEscolar.getAlumno().getId(), citaEscolar.getProfesor().getId(), citaEscolar.getTutorAlumno(), citaEscolar.getFecha());
+    }
 }

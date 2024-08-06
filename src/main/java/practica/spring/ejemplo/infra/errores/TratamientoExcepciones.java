@@ -1,6 +1,7 @@
 package practica.spring.ejemplo.infra.errores;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,6 +28,17 @@ public class TratamientoExcepciones {
         return ResponseEntity.badRequest().body(errores);
 
 
+    }
+    //Metodo para tratar(retornar) las validaciones relaciondas con la integridad(validez) de los datos enviados
+    @ExceptionHandler(ValidacionDeDatos.class)
+    public ResponseEntity tratarErrorValidacionDatos(Exception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    //Metodo para tratar(retornar) las validaciones relacionadas a las reglas de negocio
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity tratarValidacionReglasNegocio(Exception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     //record para mapear errores
