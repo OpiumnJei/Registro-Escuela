@@ -5,12 +5,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import practica.spring.ejemplo.domain.citaEscolar.CitaEscolarRepository;
+import org.springframework.web.bind.annotation.*;
 import practica.spring.ejemplo.domain.citaEscolar.CitaEscolarService;
+import practica.spring.ejemplo.domain.citaEscolar.GuardarDatosCancelaciones;
 import practica.spring.ejemplo.domain.citaEscolar.RespuestaCitaEscolar;
 import practica.spring.ejemplo.domain.citaEscolar.GuardarDatosCitaEscolar;
 
@@ -27,12 +24,22 @@ public class CitaEscolarController {
     @PostMapping
     @Transactional
     public ResponseEntity crearCitaEscolar(@RequestBody @Valid GuardarDatosCitaEscolar datosCita) {
-//        System.out.println(datosCita);
 
         //guardarmos los datos enviados por cliente(postman)
-        service.guardarCitaEscolar(datosCita);
-        return  ResponseEntity.ok(new RespuestaCitaEscolar(null, null,null,null,null));
-//        return ResponseEntity.ok().build();
+       var clientResponse = service.guardarCitaEscolar(datosCita);
+
+       //retorna los datos de la cita al cliente
+        return  ResponseEntity.ok(clientResponse);
+    }
+
+    //Metodo para cancelar una cita
+
+    @DeleteMapping("/cancelar")
+    public ResponseEntity cancelarCitaEscolar(@RequestBody @Valid GuardarDatosCancelaciones datosCancelaciones){
+
+        service.cancelarCitaEscolar(datosCancelaciones);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
