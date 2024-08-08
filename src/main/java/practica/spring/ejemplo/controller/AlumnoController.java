@@ -1,5 +1,10 @@
 package practica.spring.ejemplo.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;
@@ -14,8 +19,10 @@ import practica.spring.ejemplo.domain.alumno.*;
 
 import java.net.URI;
 
+@Tag(name = "Alumnos", description = "Operaciones relacionadas con alumnos")
 @RestController
 @RequestMapping("/registro")
+@SecurityRequirement(name = "bearer-key") //etiqueta openAPi, indica que un endpoint necesita autentificacion/autorizacion
 public class AlumnoController {
 
     //inyeccion
@@ -23,6 +30,7 @@ public class AlumnoController {
     private AlumnoRepository repository;
 
     //CREAR UN REGISTRO DE ESTUDIANTE
+    @Operation(summary = "Crear registro de alumno", description = "Se crea un nuevo registro de alumno.")
     @PostMapping
     public ResponseEntity<RespuestaAlumno> registrarEstudiante(@RequestBody @Valid AlumnoDTO datos, @NotNull UriComponentsBuilder uriComponentsBuilder) {
         Alumno alumno = repository.save(new Alumno(datos));
@@ -39,8 +47,9 @@ public class AlumnoController {
 ////        return repository.findAll();
 //    }
 
-    //OBTIENE TODOS LOS REGISTROS ACTIVOS DE ESTUDIANTES
+    //OBTIENE TODOS LOS REGISTROS ACTIVOS DE ALUMNOS
     //para la paginacion
+    @Operation(summary = "Obtener todos los registros de alumnos activos", description = "Se obtienen los registros activos de alumnos.")
     @GetMapping
     public ResponseEntity<Page<ListaAlumnos>> listadoAlumnos(@PageableDefault Pageable paginacion) {
 
@@ -55,6 +64,8 @@ public class AlumnoController {
         /* return repository.findAll(); */
     }
 
+    //OBTENER REGISTRO DE ALUMNO POR ID
+    @Operation(summary = "Obtener registro de alumno especifico", description = "Se obtiene la informacion de un alumno mediante ID.")
     @GetMapping("/{id}")
     public ResponseEntity<RespuestaAlumno> retornarAlumnoEspecifico(@PathVariable Long id){
         Alumno alumno = repository.getReferenceById(id);
@@ -66,6 +77,7 @@ public class AlumnoController {
     }
 
     //ACTUALIZAR EL REGISTRO DE UN ALUMNO
+    @Operation(summary = "Actualizar registro de alumno", description = "Se actualizan datos especificos de un alumno")
     @PutMapping
     @Transactional
     public ResponseEntity actualizarAlumno(@RequestBody @Valid ActualizarAlumno actualizarAlumno) {
@@ -77,6 +89,7 @@ public class AlumnoController {
 
     //DESACTIVAR UN ESTUDIANTE MEDIANTE ID
     //Delete logico, desactivar un alumno(no eliminarlo de la base de datos)
+    @Operation(summary = "Eliminar registro de alumno", description = "Se elimina el registro de un alumno mediante id")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarAlumno(@PathVariable Long id) {

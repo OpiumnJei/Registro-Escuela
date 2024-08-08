@@ -1,5 +1,8 @@
 package practica.spring.ejemplo.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;
@@ -14,14 +17,17 @@ import practica.spring.ejemplo.domain.profesor.*;
 
 import java.net.URI;
 
+@Tag(name = "Profesores", description = "Operaciones relacionadas con profesores")
 @RestController
 @RequestMapping("/registro/profesor")
+@SecurityRequirement(name = "bearer-key")
 public class ProfesorController {
 
      @Autowired
     private ProfesorRepository profeRepository;
 
      //registrar un profesor
+     @Operation(summary = "Crear registro de profesor", description = "Se crea un nuevo registro de profesor.")
     @PostMapping
     public ResponseEntity<ResponseProfesor> registrarProfesor(@RequestBody @Valid ProfesorDTO datos, @NotNull UriComponentsBuilder uriComponentsBuilder) {
         Profesor profesor = profeRepository.save(new Profesor(datos));
@@ -37,6 +43,7 @@ public class ProfesorController {
 
     //listar profesores, si aun estan trabajando(activos)
     //PageableDefault(size = 4) indica la cantidad de registro que se mostraran por defecto
+    @Operation(summary = "Obtener todos los registros de profesores activos", description = "Se obtienen los registros activos de profesores.")
     @GetMapping
     public ResponseEntity<Page<ListaProfesores>> listarProfesoresActivos(@PageableDefault(size = 4) Pageable paginacion){
 
@@ -44,6 +51,7 @@ public class ProfesorController {
     }
 
     //listar profesor en especifico
+    @Operation(summary = "Obtener registro de profesor especifico", description = "Se obtiene registro de un profesor activo mediante id.")
     @GetMapping("/{id}")
     public ResponseEntity<ResponseProfesor> listarProfesorEspecifico(@PathVariable Long id){
         //buscamos en la base de datos el id introducido en el path
@@ -55,6 +63,7 @@ public class ProfesorController {
     }
 
     //actualizar datos de un profesor en especifico
+    @Operation(summary = "Actualizar datos de profesor especifico", description = "Se actualizan datos especificos de un profesor.")
     @PutMapping
     @Transactional
     public ResponseEntity actualizarDatosProfesor(@RequestBody @Valid ActualizarDatosProfesor actualizarDatosProfesor){
@@ -68,6 +77,7 @@ public class ProfesorController {
     }
 
     //eliminar(desactivar) profesor
+    @Operation(summary = "Eliminar registro de profesor", description = "Se elimina el registro de un profesor mediante id")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity desactivarProfesor(@PathVariable Long id){

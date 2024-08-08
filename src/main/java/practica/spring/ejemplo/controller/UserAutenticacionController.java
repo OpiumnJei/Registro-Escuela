@@ -1,5 +1,7 @@
 package practica.spring.ejemplo.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import practica.spring.ejemplo.domain.Users.UserDTO;
 import practica.spring.ejemplo.dto.TokenJwtDTO;
 import practica.spring.ejemplo.infra.security.TokenService;
 
+@Tag(name = "Login", description = "Se genera bearer token para la autorizacion en el resto de endpoints.")
 @RestController
 @RequestMapping("/login")
 public class UserAutenticacionController {
@@ -25,8 +28,8 @@ public class UserAutenticacionController {
     @Autowired
     private TokenService tokenService;
 
+    @Operation(summary = "Login de usuarios", description = "Introduce tu usuario y contrasenia.")
     @PostMapping
-
     public ResponseEntity autenticarUsuario(@RequestBody @Valid UserDTO userDTO){
 
         //autenticamos los datos del usuario DTO con su login = usuario y la contrasenia

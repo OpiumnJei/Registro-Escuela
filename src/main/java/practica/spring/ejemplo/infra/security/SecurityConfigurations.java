@@ -21,7 +21,6 @@ public class SecurityConfigurations {
     //inyectamos el security filter
     @Autowired SecurityFilter securityFilter;
 
-
     //Version actualizada del codigo v1
 //    @Bean
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,8 +46,8 @@ public class SecurityConfigurations {
         return httpSecurity.csrf().disable()  // Desactiva la protección CSRF
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Configura las sesiones como stateless
                 .and().authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/login")
-                .permitAll()
+                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
