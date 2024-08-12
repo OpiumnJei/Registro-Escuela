@@ -33,9 +33,8 @@ public class CancelarCitaAntesDia implements IValidarCancelaciones{
             throw new ValidationException("Las citas solo se pueden cancelar con al menos 24 horas de anticipación");
         }
 
-
         //otra forma aun mas sencilla
-        // var fechaValida = Duration.between(ahora, cita.getFecha()).toHours();
-        // if(fechaValida < 24)
+        // var fechaValida = Duration.between(ahora, cita.getFecha()).toHours()<24;
+        // if(fechaValida)
     }
 }

@@ -65,7 +65,7 @@ public class CitaEscolarService {
         return new RespuestaCitaEscolar(citaEscolar);
     }
 
-    //metodo que buscar un profesor aleatorio
+    //metodo que busca un profesor aleatorio
     private Profesor seleccionarProfesorAleatorio(GuardarDatosCitaEscolar datosCitaEscolar) {
         //corroborar que el id no sea nulo
         if(datosCitaEscolar.idProfesor() != null){

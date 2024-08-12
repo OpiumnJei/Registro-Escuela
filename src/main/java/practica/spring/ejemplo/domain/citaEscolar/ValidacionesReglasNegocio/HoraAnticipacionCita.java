@@ -21,7 +21,7 @@ public class HoraAnticipacionCita implements IValidarCitasEscolares{
         //debe de haber una diferencia entre la horaActual y la horaConsulta de 1h
         var tiempoValidoParaCita = Duration.between(horaActual, horaCitaEscolar).toHours()<1;
 
-        //si la diferencia es menor  a una hora
+        //si la diferencia es menor a una hora
         if(tiempoValidoParaCita){
             throw new ValidationException("Las citas deben hacerse con almenos una(1) hora de anticipacion");
         }

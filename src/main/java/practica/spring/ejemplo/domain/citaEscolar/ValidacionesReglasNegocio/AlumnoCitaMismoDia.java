@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import practica.spring.ejemplo.domain.citaEscolar.CitaEscolarRepository;
 import practica.spring.ejemplo.domain.citaEscolar.GuardarDatosCitaEscolar;
 
+//SE VALIDA QUE UN ALUMNO NO TENGA DOS CITAS EN EL MISMO DIA
 @Component
 public class AlumnoCitaMismoDia implements IValidarCitasEscolares {
 
@@ -20,7 +21,7 @@ public class AlumnoCitaMismoDia implements IValidarCitasEscolares {
         var terminaJornada = datosCitaEscolar.fecha().withHour(16);
 
         //comprueba si un alumno ya tiene una cita registrada el mismo dia, es decir,
-        // en el mismo intervalo de tiempo especificado en las variables de arriba
+        //en el mismo intervalo de tiempo especificado en las variables de arriba
         var alumnoEnCita = citaEscolarRepository.existsByAlumnoIdAndFechaBetween(datosCitaEscolar.idAlumno(),iniciaJornada, terminaJornada);
 
         //si un alumno tiene una cita en el mismo dia
